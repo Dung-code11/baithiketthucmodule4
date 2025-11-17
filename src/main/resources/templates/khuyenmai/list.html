@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản Lý Khuyến Mãi</title>
+    <style>
+        body { font-family: Arial; margin: 40px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        table, th, td { border: 1px solid #ccc; }
+        th, td { padding: 10px; text-align: left; }
+        .form-box { background: #f4f4f4; padding: 20px; border-radius: 6px; }
+    </style>
+</head>
+<body>
+
+<h2>Quản Lý Khuyến Mãi</h2>
+
+<div class="form-box">
+    <form th:action="@{/khuyenmai/save}" method="post" th:object="${km}">
+        <input type="hidden" th:field="*{id}">
+
+        <label>Tiêu đề</label><br>
+        <input th:field="*{tieuDe}" style="width: 300px"><br><br>
+
+        <label>Mô tả</label><br>
+        <textarea th:field="*{moTa}" rows="3" style="width: 300px"></textarea><br><br>
+
+        <label>Hình ảnh (URL)</label><br>
+        <input th:field="*{hinhAnh}" style="width: 300px"><br><br>
+
+        <label>Ngày bắt đầu</label><br>
+        <input type="date" th:field="*{ngayBatDau}"><br><br>
+
+        <label>Ngày kết thúc</label><br>
+        <input type="date" th:field="*{ngayKetThuc}"><br><br>
+
+        <button type="submit">Lưu</button>
+    </form>
+</div>
+
+<h3>Danh sách</h3>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Tiêu đề</th>
+        <th>Mô tả</th>
+        <th>Ảnh</th>
+        <th>Ngày BD</th>
+        <th>Ngày KT</th>
+        <th>Hành động</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="km : ${list}">
+        <td th:text="${km.id}"></td>
+        <td th:text="${km.tieuDe}"></td>
+        <td th:text="${km.moTa}"></td>
+        <td><img th:src="${km.hinhAnh}" width="80"></td>
+        <td th:text="${km.ngayBatDau}"></td>
+        <td th:text="${km.ngayKetThuc}"></td>
+        <td>
+            <a th:href="@{'/khuyenmai/edit/' + ${km.id}}">Sửa</a> |
+            <a th:href="@{'/khuyenmai/delete/' + ${km.id}}">Xóa</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

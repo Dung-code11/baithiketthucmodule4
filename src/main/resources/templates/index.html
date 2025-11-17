@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách khuyến mãi</title>
+    <style>
+        .header-container { display:flex; align-items:center; gap:10px; margin-bottom:20px; }
+        .header-container input[type="text"] { padding:5px; }
+        .header-container button { padding:5px 10px; cursor:pointer; }
+        .tool-button { padding:3px 8px; margin-right:5px; cursor:pointer; border:none; color:white; }
+        .tool-button.edit { background-color:#4CAF50; }
+        .tool-button.delete { background-color:#f44336; }
+    </style>
+</head>
+<body>
+
+<div class="header-container">
+    <h1>Danh sách khuyến mãi</h1>
+    <button onclick="location.href='/khuyenmai/them'">Thêm khuyến mãi</button>
+
+    <form th:action="@{/khuyenmai}" method="get" style="display:inline;">
+        <input type="text" name="search" placeholder="Tìm theo tiêu đề">
+        <button type="submit">Tìm kiếm</button>
+    </form>
+</div>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Tiêu đề</th>
+        <th>Ngày bắt đầu</th>
+        <th>Ngày kết thúc</th>
+        <th>Mức giảm</th>
+        <th>Chi tiết</th>
+        <th>Tool</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="km : ${list}">
+        <td th:text="${km.id}"></td>
+        <td th:text="${km.tieuDe}"></td>
+        <td th:text="${km.ngayBatDau}"></td>
+        <td th:text="${km.ngayKetThuc}"></td>
+        <td th:text="${km.mucGiamGia}"></td>
+        <td th:text="${km.chiTiet}"></td>
+        <td>
+            <button class="tool-button edit" th:onclick="'location.href=\'/khuyenmai/edit/' + ${km.id} + '\';'">Sửa</button>
+            <button class="tool-button delete" th:onclick="'if(confirm(\'Bạn có chắc muốn xóa?\')) location.href=\'/khuyenmai/delete/' + ${km.id} + '\';'">Xóa</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
